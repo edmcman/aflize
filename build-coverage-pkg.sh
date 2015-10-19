@@ -14,7 +14,7 @@ cd *
 export CFLAGS="-fprofile-arcs -ftest-coverage"
 export CXXFLAGS="-fprofile-arcs -ftest-coverage"
 export LDFLAGS="-lgcov"
-dpkg-buildpackage -uc -us -Jauto
+dpkg-buildpackage -uc -us
 mv ~/pkg/*.deb ~/pkgs-coverage
 
 exit 0

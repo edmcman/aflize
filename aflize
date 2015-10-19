@@ -40,7 +40,7 @@ for pkg in $PKGS; do
         apt-get source $pkg 2>&1
         cd *
 
-        ( dpkg-buildpackage -uc -us -Jauto 2>&1 | \
+        ( dpkg-buildpackage -uc -us 2>&1 | \
             tee ~/logs/${pkg}.txt ) || echo $pkg >> ~/failed
 
         mv ~/pkg/*.deb ~/pkgs

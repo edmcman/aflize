@@ -44,3 +44,7 @@ RUN mkdir ~/fuzz-results ~/pkgs-coverage
 RUN apt-get install lcov -y
 ADD ./testcases /root/testcases
 ADD ./fuzz-pkg-with-coverage.sh /root/
+ADD ./build-coverage-pkg.sh /root/
+
+ADD ./go.sh /root/
+RUN cd /root && bash ./go.sh
