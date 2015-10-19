@@ -1,6 +1,6 @@
 # you can try replacing "sid" with sid.
-FROM debian:sid
-RUN echo 'deb-src http://httpredir.debian.org/debian sid main' >> /etc/apt/sources.list
+FROM ubuntu:14.04
+#RUN echo 'deb-src http://httpredir.debian.org/debian sid main' >> /etc/apt/sources.list
 
 ADD ./aflize /usr/bin/aflize
 
@@ -28,17 +28,17 @@ RUN setup-afl_cc
 
 ADD ./afl-fuzz-parallel /usr/bin/
 
-ADD ./install-preeny.sh /tmp/
-RUN /tmp/install-preeny.sh
+#ADD ./install-preeny.sh /tmp/
+#RUN /tmp/install-preeny.sh
 
 RUN mkdir ~/pkg ~/pkgs ~/logs
 
 # This isn't really necessary, but it'd be a real convenience for me.
-RUN apt-get update && apt-get install apt-file -y && apt-file update
+#RUN apt-get update && apt-get install apt-file -y && apt-file update
 
 # install "exploitable" GDB script
-RUN apt-get update && apt-get install gdb python -y
-RUN wget -O- 'https://github.com/jfoote/exploitable/archive/master.tar.gz' | tar zxvf - && cd exploitable-master && python setup.py install
+#RUN apt-get update && apt-get install gdb python -y
+#RUN wget -O- 'https://github.com/jfoote/exploitable/archive/master.tar.gz' | tar zxvf - && cd exploitable-master && python setup.py install
 
 RUN mkdir ~/fuzz-results ~/pkgs-coverage
 RUN apt-get install lcov -y
