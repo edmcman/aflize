@@ -23,8 +23,6 @@ RUN ln -s /etc/profile.d/afl-sh-profile /etc/profile.d/afl-sh-profile.sh
 RUN echo '. /etc/profile.d/afl-sh-profile' >> /root/.bashrc && chmod +x /root/.bashrc
 
 RUN chmod +x /etc/profile.d/afl-sh-profile
-ADD ./setup-afl_cc /usr/bin/setup-afl_cc
-RUN setup-afl_cc
 
 ADD ./afl-fuzz-parallel /usr/bin/
 
@@ -46,5 +44,12 @@ ADD ./testcases /root/testcases
 ADD ./fuzz-pkg-with-coverage.sh /root/
 ADD ./build-coverage-pkg.sh /root/
 
-ADD ./go.sh /root/
-RUN cd /root && bash ./go.sh
+ADD ./go-cov.bash /root/
+ADD ./packages /root/
+RUN cd /root && bash ./go-cov.bash
+
+ADD ./setup-afl_cc /usr/bin/setup-afl_cc
+RUN setup-afl_cc
+
+ADD ./go-afl.bash /root/
+RUN cd /root && bash ./go-afl.bash
