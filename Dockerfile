@@ -53,3 +53,5 @@ RUN setup-afl_cc
 
 ADD ./go-afl.bash /root/
 RUN cd /root && bash ./go-afl.bash
+
+RUN cd /root/pkgs && dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz && cd /root/pkgs-coverage && dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
