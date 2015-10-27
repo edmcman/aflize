@@ -7,6 +7,7 @@
 #export CC=`echo $AFL_CC`
 #export CXX=`echo $AFL_CXX`
 
+mkdir -p ~/pkg
 cd ~/pkg
 rm -rf *
 apt-get -y build-dep $1
