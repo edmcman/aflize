@@ -9,13 +9,17 @@
 
 mkdir -p ~/pkg
 cd ~/pkg
-rm -rf *
+#rm -rf *
 apt-get -y build-dep $1
 apt-get -y source $1
-cd *
-export CFLAGS="-fprofile-arcs -ftest-coverage"
-export CXXFLAGS="-fprofile-arcs -ftest-coverage"
-export LDFLAGS="-lgcov"
+cd $(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n 1 | cut -d ' ' -f 2)
+
+export CFLAGS="$(dpkg-buildflags --get CFLAGS) --coverage"
+export DEB_CFLAGS_SET="$CFLAGS"
+export CXXFLAGS="$(dpkg-buildflags --get CXXFLAGS) --coverage"
+export DEB_CXXFLAGS_SET="$CXXFLAGS"
+export LDFLAGS="$(dpkg-buildflags --get LDFLAGS) -lgcov"
+export DEB_LDFLAGS_SET="$LDFLAGS"
 dpkg-buildpackage -uc -us
 mv ~/pkg/*.deb ~/pkgs-coverage
 
