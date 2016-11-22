@@ -1,6 +1,4 @@
-# you can try replacing "sid" with sid.
-FROM 32bit/ubuntu:14.04
-#RUN echo 'deb-src http://httpredir.debian.org/debian sid main' >> /etc/apt/sources.list
+FROM ioft/i386-ubuntu:trusty
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list
