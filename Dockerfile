@@ -48,7 +48,7 @@ ADD ./build-coverage-pkg.sh /root/
 
 ADD ./go-cov.bash /root/
 ADD ./packages /root/
-RUN cd /root && bash ./go-cov.bash
+#RUN cd /root && bash ./go-cov.bash
 
 RUN cd /root && git clone https://github.com/mrash/afl-cov.git
 
