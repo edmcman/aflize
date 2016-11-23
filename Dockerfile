@@ -20,4 +20,6 @@ ADD ./gcc-cov /usr/bin/gcc-cov
 ADD ./setup-cc /usr/bin/setup-cc
 RUN setup-cc
 
+ADD ./build-repo.sh /root/build-repo.sh
+ADD ./add-repo.bash /root/add-repo.bash
 
