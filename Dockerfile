@@ -11,11 +11,7 @@ RUN echo 'APT::Install-Suggests "0";' > /etc/apt/apt.conf.d/no-suggests
 RUN echo 'APT::Install-Recommends "0";' > /etc/apt/apt.conf.d/no-recommends
 RUN apt-get update && apt-get install build-essential gcc g++ wget tar gzip make ca-certificates git nano python2.7 -y
 
-RUN apt-get install lcov -y
-
 ADD ./docker-scripts/build-coverage-pkg.sh /root/
-
-RUN cd /root && git clone https://github.com/mrash/afl-cov.git
 
 ADD ./docker-scripts/gcc-cov /usr/bin/gcc-cov
 
