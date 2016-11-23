@@ -14,4 +14,4 @@ NEWFILE="$PKGVOLDIR/$(basename $FILE)"
 NEWDOCKFILE="/root/pkg/$(basename $FILE)"
 cp "$FILE" "$NEWFILE"
 
-docker run -it --rm=true -v $PKGVOLDIR:/root/pkg $PKG-image bash -i -c "${CMD//$FILE/$NEWDOCKFILE}"
+docker run -it --rm=true -v $PKGVOLDIR:/root/pkg $PKG-image bash -i -c "${CMD//@@/$NEWDOCKFILE}"
