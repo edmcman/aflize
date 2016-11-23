@@ -1,14 +1,9 @@
 FROM ioft/i386-ubuntu:trusty
+
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse' >> /etc/apt/sources.list
-
-ADD ./aflize /usr/bin/aflize
-
-# If you'd like to specify a list of packages to be built, uncomment the
-# following line by removing the # symbol at its beginning:
-# ADD ./packages.list /root/
 
 RUN echo 'APT::Install-Suggests "0";' > /etc/apt/apt.conf.d/no-suggests
 RUN echo 'APT::Install-Recommends "0";' > /etc/apt/apt.conf.d/no-recommends
@@ -26,11 +21,6 @@ RUN wget 'http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz' -O- | tar zxvf
 
 #RUN chmod +x /etc/profile.d/afl-sh-profile
 
-ADD ./afl-fuzz-parallel /usr/bin/
-
-#ADD ./install-preeny.sh /tmp/
-#RUN /tmp/install-preeny.sh
-
 RUN mkdir ~/pkg ~/pkgs-afl ~/logs
 
 # This isn't really necessary, but it'd be a real convenience for me.
@@ -46,16 +36,11 @@ ADD ./testcases /root/testcases
 ADD ./fuzz-pkg-with-coverage.sh /root/
 ADD ./build-coverage-pkg.sh /root/
 
-ADD ./go-cov.bash /root/
-ADD ./packages /root/
-#RUN cd /root && bash ./go-cov.bash
-
 RUN cd /root && git clone https://github.com/mrash/afl-cov.git
 
-#ADD ./setup-afl_cc /usr/bin/setup-afl_cc
-#RUN setup-afl_cc
+ADD ./gcc-cov /usr/bin/gcc-cov
 
-#ADD ./go-afl.bash /root/
-#RUN cd /root && bash ./go-afl.bash
+ADD ./setup-afl_cc /usr/bin/setup-afl_cc
+RUN setup-afl_cc
 
-#RUN cd /root/pkgs && dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz && cd /root/pkgs-coverage && dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
+

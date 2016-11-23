@@ -1,0 +1,24 @@
+#!/bin/bash
+
+case "$(basename "$0")" in
+"cc" | "gcc")
+    PROG="${ORIG_CC?"No original"}"
+    EXTRA="--coverage"
+    ;;
+"c++" | "g++")
+    PROG="${ORIG_CXX?"No original"}"
+    EXTRA="--coverage"
+    ;;
+*)
+    exit 1
+    ;;
+esac
+
+
+# If we aren't recording coverage, reset the extra args.
+if [ ! -f /COVERAGE ]
+then
+	EXTRA=""
+fi
+
+"$PROG" "$EXTRA" "$@"
