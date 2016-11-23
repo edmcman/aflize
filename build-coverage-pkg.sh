@@ -20,6 +20,7 @@ export CXXFLAGS="$(dpkg-buildflags --get CXXFLAGS) --coverage"
 export DEB_CXXFLAGS_SET="$CXXFLAGS"
 export LDFLAGS="$(dpkg-buildflags --get LDFLAGS) -lgcov"
 export DEB_LDFLAGS_SET="$LDFLAGS"
+touch /COVERAGE
 dpkg-buildpackage -uc -us
 mv ~/pkg/*.deb ~/pkgs-coverage
 

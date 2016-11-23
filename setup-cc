@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "export ORIG_CC=`readlink $( readlink /etc/alternatives/cc) `" >> /etc/profile.d/sh-profile.sh
-echo "export ORIG_CXX=`readlink $( readlink /etc/alternatives/c++) `" >> /etc/profile.d/sh-profile.sh
+echo "export ORIG_CC=`readlink $( readlink /etc/alternatives/cc) `" >> /etc/bash.bashrc
+echo "export ORIG_CXX=`readlink $( readlink /etc/alternatives/c++) `" >> /etc/bash.bashrc
 
 rm /usr/bin/cc && cp /usr/bin/gcc-cov /usr/bin/cc
 rm /usr/bin/gcc && cp /usr/bin/gcc-cov /usr/bin/gcc

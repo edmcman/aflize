@@ -9,16 +9,6 @@ RUN echo 'APT::Install-Suggests "0";' > /etc/apt/apt.conf.d/no-suggests
 RUN echo 'APT::Install-Recommends "0";' > /etc/apt/apt.conf.d/no-recommends
 RUN apt-get update && apt-get install build-essential gcc g++ wget tar gzip make ca-certificates git nano python2.7 -y
 
-# Make sure afl-gcc will be run. This forces us to set AFL_CC and AFL_CXX or
-# otherwise afl-gcc will be trying to call itself by calling gcc.
-ADD ./sh-profile /etc/profile.d/sh-profile.sh
-RUN chmod +x /etc/profile.d/sh-profile.sh
-#RUN ln -s /etc/profile.d/afl-sh-profile /etc/profile.d/afl-sh-profile.sh
-
-# It looks like /etc/profile.d isn't read for some reason, but .bashrc is.
-# Let's include /etc/profile.d/afl-sh-profile from there.
-#RUN echo '. /etc/profile.d/afl-sh-profile' >> /root/.bashrc && chmod +x /root/.bashrc
-
 RUN apt-get install lcov -y
 
 ADD ./build-coverage-pkg.sh /root/
