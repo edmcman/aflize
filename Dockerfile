@@ -1,5 +1,7 @@
 FROM ioft/i386-ubuntu:trusty
 
+WORKDIR /root
+
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse' >> /etc/apt/sources.list
 RUN echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse' >> /etc/apt/sources.list
@@ -11,15 +13,15 @@ RUN apt-get update && apt-get install build-essential gcc g++ wget tar gzip make
 
 RUN apt-get install lcov -y
 
-ADD ./build-coverage-pkg.sh /root/
+ADD ./docker-scripts/build-coverage-pkg.sh /root/
 
 RUN cd /root && git clone https://github.com/mrash/afl-cov.git
 
-ADD ./gcc-cov /usr/bin/gcc-cov
+ADD ./docker-scripts/gcc-cov /usr/bin/gcc-cov
 
-ADD ./setup-cc /usr/bin/
+ADD ./docker-scripts/setup-cc /usr/bin/
 RUN setup-cc
 
-ADD ./build-repo.sh /root/
-ADD ./add-repo.bash /root/
-ADD ./build-and-install-coverage-pkg.sh /root/
+ADD ./docker-scripts/build-repo.sh /root/
+ADD ./docker-scripts/add-repo.bash /root/
+ADD ./docker-scripts/build-and-install-coverage-pkg.sh /root/
