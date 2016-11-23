@@ -10,8 +10,6 @@ CMD="$@"
 
 # copy FILE to docker container
 test -f "$FILE"
-NEWFILE="$VOLDIR/$(basename $FILE)"
-NEWDOCKFILE="/root/pkg/$(basename $FILE)"
-cp "$FILE" "$NEWFILE"
+NEWDOCKFILE="/tmp/$(basename $FILE)"
 
-docker run -it --rm=true -v $VOLDIR:/root/pkg $PKG-image bash -i -c "${CMD//@@/$NEWDOCKFILE}"
+cat "$FILE" | docker run -i --rm=true -v $VOLDIR:/root/pkg $PKG-image bash -i -c "cat >$NEWDOCKFILE && ${CMD//@@/$NEWDOCKFILE}"
