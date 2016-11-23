@@ -3,11 +3,11 @@
 case "$(basename "$0")" in
 "cc" | "gcc")
     PROG="${ORIG_CC?"No original"}"
-    EXTRA="--coverage"
+    EXTRA="--coverage -lgcov"
     ;;
 "c++" | "g++")
     PROG="${ORIG_CXX?"No original"}"
-    EXTRA="--coverage"
+    EXTRA="--coverage -lgcov"
     ;;
 *)
     exit 1
@@ -21,4 +21,4 @@ then
 	EXTRA=""
 fi
 
-"$PROG" "$EXTRA" "$@"
+"$PROG" $EXTRA "$@"
