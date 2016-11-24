@@ -1,9 +1,11 @@
 #!/bin/bash
 set -ex
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 PKG="${1?}"
 shift
-VOLDIR="$(pwd)/$PKG-covdata"
+VOLDIR="$(DIR)/$PKG-covdata"
 FILE="${1?}"
 shift
 CMD="$@"
