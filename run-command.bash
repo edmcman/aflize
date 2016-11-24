@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 PKG="${1?}"
 shift
-VOLDIR="$(DIR)/$PKG-covdata"
+VOLDIR="$DIR/$PKG-covdata"
 FILE="${1?}"
 shift
 CMD="$@"
