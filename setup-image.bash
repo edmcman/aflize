@@ -9,5 +9,5 @@ shift
 EXTRAPKGS="$@"
 
 docker rm -f $PKG-temp || true
-docker run -i --name $PKG-temp -v $VOLDIR:/root/pkg covize bash -i -c "./build-and-install-coverage-pkg.sh $PKG $EXTRAPKGS"
+docker run -i --name $PKG-temp -v $VOLDIR:/root/pkg eschwartz/covize bash -i -c "./build-and-install-coverage-pkg.sh $PKG $EXTRAPKGS"
 docker commit $PKG-temp $PKG-image
