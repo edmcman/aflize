@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 PKG="$1"
 shift
 EXTRAPKGS="$@"
