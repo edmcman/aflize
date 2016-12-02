@@ -19,6 +19,7 @@ esac
 # instrumentation.  This is so we get the right output for commands
 # like gcc -v.
 "$PROG" "$@"
+EXIT=$?
 
 if [ -f /COVERAGE ]
 then
@@ -28,3 +29,5 @@ then
     # If we're doing something like gcc -v, this will have no effect.
     "$PROG" $EXTRA "$@" >/dev/null 2>/dev/null
 fi
+
+exit $EXIT
