@@ -15,19 +15,29 @@ case "$(basename "$0")" in
 esac
 
 
-# Always run a normal execution, even if we are adding coverage
-# instrumentation.  This is so we get the right output for commands
-# like gcc -v.
-"$PROG" "$@"
-EXIT=$?
-
 if [ -f /COVERAGE ]
 then
     # If we are recording coverage, then run again with the coverage
     # flags, but do so silently.  The idea is that if we are actually
     # doing compilation, we'll overwrite the non-instrumented file.
     # If we're doing something like gcc -v, this will have no effect.
+
     "$PROG" $EXTRA "$@" >/dev/null 2>/dev/null
+    EXIT="$?"
+fi
+
+if [ "$EXIT" -eq "0" ]
+then
+    # The coverage execution was successful.  Good deal.  Let's run
+    # again to get the proper messages output.  XXX: Eventually save
+    # stdout and stderr to files instead of re-running.
+
+    "$PROG" $EXTRA "$@"
+else
+    # We didn't execute a coverage execution, or it failed
+
+    "$PROG" "$@"
+    EXIT="$?"
 fi
 
 exit $EXIT
