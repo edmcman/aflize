@@ -26,5 +26,5 @@ then
     # flags, but do so silently.  The idea is that if we are actually
     # doing compilation, we'll overwrite the non-instrumented file.
     # If we're doing something like gcc -v, this will have no effect.
-    "$PROG" $EXTRA "$@"
+    "$PROG" $EXTRA "$@" >/dev/null 2>/dev/null
 fi
