@@ -14,4 +14,4 @@ CMD="$@"
 test -f "$FILE"
 NEWDOCKFILE="/tmp/$(basename $FILE)"
 
-cat "$FILE" | docker run -i --rm=true -v $VOLDIR:/root/pkg $PKG-image bash -i -c "cat >$NEWDOCKFILE && ${CMD//\$SEEDFILE/$NEWDOCKFILE}"
+cat "$FILE" | docker run --log-driver=none -i --rm=true -v $VOLDIR:/root/pkg $PKG-image bash -i -c "cat >$NEWDOCKFILE && ${CMD//\$SEEDFILE/$NEWDOCKFILE}"
