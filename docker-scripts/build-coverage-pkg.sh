@@ -3,6 +3,7 @@
 mkdir -p ~/pkg ~/pkgs-coverage
 cd ~/pkg
 
+apt-get -y update
 apt-get -y build-dep $1
 apt-get -y source $1
 
