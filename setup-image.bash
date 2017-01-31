@@ -3,7 +3,7 @@ set -ex
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-PKG="${1?}"
+PKG="${1?No package specified}"
 VOLDIR="$DIR/$PKG-covdata"
 shift
 EXTRAPKGS="$@"
