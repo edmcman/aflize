@@ -1,0 +1,3 @@
+[submodule "afl-cov"]
+	path = afl-cov
+	url = https://github.com/mrash/afl-cov.git
