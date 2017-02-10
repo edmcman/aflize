@@ -15,5 +15,5 @@ then
     $DIR/setup-image.bash "$PKG"
 fi
 
-$DIR/afl-cov/afl-cov -v -d "$TESTCASEDIR" -c "$VOLDIR" --coverage-cmd "$DIR/run-command.bash $PKG AFL_FILE $CMD" --disable-gcov-check true
+$DIR/afl-cov/afl-cov --cover-corpus -v -d "$TESTCASEDIR" -c "$VOLDIR" --coverage-cmd "$DIR/run-command.bash $PKG AFL_FILE $CMD" --disable-gcov-check true
 
