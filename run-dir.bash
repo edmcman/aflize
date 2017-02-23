@@ -1,0 +1,33 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+PKG="${1?No package specified}"
+shift
+VOLDIR="$DIR/$PKG-covdata"
+TESTCASEDIR="${1?Test case directory not specified}"
+shift
+CMD="$@"
+
+if [ ! -d "$VOLDIR" ]
+then
+    echo "Settuping up coverage enabled build of $PKG"
+    $DIR/setup-image.bash "$PKG"
+fi
+
+rm /tmp/cov || true
+touch /tmp/cov
+
+for testcase in $(find "$TESTCASEDIR/.afl_seeds" "$TESTCASEDIR/.mayhem_seeds" -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}')
+do
+    lcov -z --directory "$VOLDIR"
+    $DIR/run-command.bash "$PKG" $testcase "$CMD" >&2
+    lcov --capture --directory "$VOLDIR" | $DIR/parse-info.py | sort -u > /tmp/new
+    comm -13 /tmp/cov /tmp/new | while read -r l
+    do
+	echo \"$testcase\",\"$l\"
+    done
+    cat /tmp/cov /tmp/new | sort -u > /tmp/cov
+done
+
+rm /tmp/cov
