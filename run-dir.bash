@@ -15,7 +15,7 @@ then
     $DIR/setup-image.bash "$PKG"
 fi
 
-rm /tmp/cov || true
+rm /tmp/cov "$VOLDIR/cov.map" || true
 touch /tmp/cov
 lcov -z --directory "$VOLDIR"
 
@@ -26,7 +26,7 @@ do
     lcov --capture --directory "$VOLDIR" | $DIR/parse-info.py | sort -u > /tmp/new
     comm -13 /tmp/cov /tmp/new | while read -r l
     do
-	echo \"$testcase\",\"$l\"
+	echo \"$testcase\",\"$l\" >> "$VOLDIR/cov.map"
     done
     cat /tmp/cov /tmp/new | sort -u > /tmp/cov2
     mv /tmp/cov2 /tmp/cov
