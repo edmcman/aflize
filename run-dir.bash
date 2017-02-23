@@ -17,10 +17,11 @@ fi
 
 rm /tmp/cov || true
 touch /tmp/cov
+lcov -z --directory "$VOLDIR"
 
-for testcase in $(find "$TESTCASEDIR/.afl_seeds" "$TESTCASEDIR/.mayhem_seeds" -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}')
+for testcase in $(find "$TESTCASEDIR/.afl_seeds" "$TESTCASEDIR/.mayhem_seeds" -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}' | head -n 10)
 do
-    lcov -z --directory "$VOLDIR"
+    #lcov -z --directory "$VOLDIR"
     $DIR/run-command.bash "$PKG" $testcase "$CMD" >&2
     lcov --capture --directory "$VOLDIR" | $DIR/parse-info.py | sort -u > /tmp/new
     comm -13 /tmp/cov /tmp/new | while read -r l
@@ -32,3 +33,6 @@ do
 done
 
 rm /tmp/cov
+
+lcov --directory "$VOLDIR" --capture > /tmp/cov
+$DIR/lcov/bin/genhtml -o "$VOLDIR" /tmp/cov
