@@ -27,7 +27,8 @@ do
     do
 	echo \"$testcase\",\"$l\"
     done
-    cat /tmp/cov /tmp/new | sort -u > /tmp/cov
+    cat /tmp/cov /tmp/new | sort -u > /tmp/cov2
+    mv /tmp/cov2 /tmp/cov
 done
 
 rm /tmp/cov
