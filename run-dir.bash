@@ -19,7 +19,7 @@ rm /tmp/cov || true
 touch /tmp/cov
 lcov -z --directory "$VOLDIR"
 
-for testcase in $(find "$TESTCASEDIR/.afl_seeds" "$TESTCASEDIR/.mayhem_seeds" -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}' | head -n 10)
+for testcase in $(find "$TESTCASEDIR/.afl_seeds" "$TESTCASEDIR/.mayhem_seeds" -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}')
 do
     #lcov -z --directory "$VOLDIR"
     $DIR/run-command.bash "$PKG" $testcase "$CMD" >&2
