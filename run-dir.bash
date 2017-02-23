@@ -35,4 +35,5 @@ done
 rm /tmp/cov
 
 lcov --directory "$VOLDIR" --capture > /tmp/cov
-$DIR/lcov/bin/genhtml -o "$VOLDIR" /tmp/cov
+mkdir -p "$VOLDIR/lcov"
+$DIR/lcov/bin/genhtml -o "$VOLDIR/lcov" /tmp/cov
