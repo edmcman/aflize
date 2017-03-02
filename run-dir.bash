@@ -2,11 +2,41 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+TEMP=`getopt -o d: --long dir: -- "$@"`
+if [ $? != 0 ]
+then
+   exit 1
+fi
+
+eval set -- "$TEMP"
+
+DIRS=""
+
+while true
+do
+    case "$1" in
+        -d|--dir)
+            DIR="$2"
+            shift 2
+            DIRS="$DIRS $DIR"
+            ;;
+        --) shift; break;;
+        *)
+            echo "Unknown argument: $1"
+            exit 1
+            ;;
+    esac
+done
+
+if [ "$DIRS" = "" ]
+then
+    echo "You must specify at least one directory"
+    exit 1
+fi
+
 PKG="${1?No package specified}"
 shift
 VOLDIR="$DIR/$PKG-covdata"
-TESTCASEDIR="${1?Test case directory not specified}"
-shift
 CMD="$@"
 
 if [ ! -d "$VOLDIR" ]
@@ -24,7 +54,7 @@ lcov -z --directory "$VOLDIR"
 
 n=0
 
-for testcase in $(find "$TESTCASEDIR/.afl_seeds" "$TESTCASEDIR/.mayhem_seeds" -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}')
+for testcase in $(find $DIRS -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '{print $1}')
 do
     #lcov -z --directory "$VOLDIR"
     timeout -k 60 60 $DIR/run-command.bash "$PKG" $testcase "$CMD" >&2
