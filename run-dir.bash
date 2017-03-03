@@ -60,11 +60,11 @@ do
     timeout -k 60 60 $DIR/run-command.bash "$PKG" $testcase "$CMD" >&2
     lcov --capture --directory "$VOLDIR" | $DIR/parse-info.py | sort -u > /tmp/new
     timestamp=$(find "$testcase" -printf '%T@\n')
-    comm -13 /tmp/cov /tmp/new | while read -r l
+    while read -r l
     do
         n=$((n+1))
 	echo \"$testcase\",\"$l\",\"$n\",\"$timestamp\" >> "$VOLDIR/lcov/cov.map"
-    done
+    done < <(comm -13 /tmp/cov /tmp/new)
     cat /tmp/cov /tmp/new | sort -u > /tmp/cov2
     mv /tmp/cov2 /tmp/cov
 done
