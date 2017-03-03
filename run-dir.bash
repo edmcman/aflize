@@ -16,9 +16,9 @@ while true
 do
     case "$1" in
         -d|--dir)
-            DIR="$2"
+            TDIR="$2"
             shift 2
-            DIRS="$DIRS $DIR"
+            DIRS="$DIRS $TDIR"
             ;;
         --) shift; break;;
         *)
