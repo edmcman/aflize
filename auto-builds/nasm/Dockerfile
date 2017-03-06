@@ -1,3 +1,3 @@
 FROM eschwartz/covize
 
-RUN basha -ic "./build-and-install-coverage-pkg.sh nasm"
+RUN bash -ic "./build-and-install-coverage-pkg.sh nasm"
