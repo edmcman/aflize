@@ -1,5 +1,3 @@
 FROM eschwartz/covize
 
-WORKDIR /root
-
-RUN ./build-and-install-coverage-pkg.sh binutils
+RUN bash -ic "./build-and-install-coverage-pkg.sh binutils"

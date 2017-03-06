@@ -1,5 +1,3 @@
 FROM eschwartz/covize
 
-WORKDIR /root
-
-RUN ./build-and-install-coverage-pkg.sh nasm
+RUN basha -ic "./build-and-install-coverage-pkg.sh nasm"

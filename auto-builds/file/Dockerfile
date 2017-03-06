@@ -1,5 +1,3 @@
 FROM eschwartz/covize
 
-WORKDIR /root
-
-RUN ./build-and-install-coverage-pkg.sh file libmagic1
+RUN bash -ic "./build-and-install-coverage-pkg.sh file libmagic1"
