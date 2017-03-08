@@ -21,6 +21,7 @@ fi
 # OK, the image is there.  Now we need to extract the covdata files.
 if [ ! -d "$VOLDIR" ]
 then
-    mkdir "$VOLDIR"
-    docker run --log-driver=none --rm $PKG-image tar -c -C /root/pkg . | tar -x -C "$VOLDIR"
+    id=$(docker create $PKG-image)
+    docker cp $id:/root/pkg/ "$VOLDIR"
+    docker rm -v $id
 fi
