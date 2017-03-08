@@ -22,5 +22,5 @@ fi
 if [ ! -d "$VOLDIR" ]
 then
     mkdir "$VOLDIR"
-    docker run --rm $PKG-image tar -c -C /root/pkg . | tar -x -C "$VOLDIR"
+    docker run --log-driver=none --rm $PKG-image tar -c -C /root/pkg . | tar -x -C "$VOLDIR"
 fi
