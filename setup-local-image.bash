@@ -14,7 +14,7 @@ then
     docker tag -f eschwartz/covize:$PKG $PKG-image
 else
     # If not, build it
-    "$DIR/build.image.bash" $PKG $EXTRAPKGS
+    "$DIR/build-image.bash" $PKG $EXTRAPKGS
 fi
 
 
