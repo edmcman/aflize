@@ -24,4 +24,6 @@ then
     id=$(docker create $PKG-image)
     docker cp $id:/root/pkg/ "$VOLDIR"
     docker rm -v $id
+    mv "$VOLDIR/pkg"/* "$VOLDIR"
+    rmdir "$VOLDIR/pkg"
 fi
