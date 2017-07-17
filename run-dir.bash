@@ -42,7 +42,7 @@ CMD="$@"
 if [ ! -d "$VOLDIR" ]
 then
     echo "Settuping up coverage enabled build of $PKG"
-    $DIR/setup-image.bash "$PKG"
+    $DIR/setup-local-image.bash "$PKG"
 fi
 
 
@@ -50,7 +50,7 @@ mkdir -p "$VOLDIR/lcov"
 
 rm /tmp/cov "$VOLDIR/cov.map" || true
 touch /tmp/cov
-lcov -z --directory "$VOLDIR"
+$DIR/lcov/bin/lcov -z --directory "$VOLDIR"
 
 n=0
 
@@ -58,7 +58,7 @@ for testcase in $(find $DIRS -type f  -printf '%p %T@\n' | sort -n -k2,2 | awk '
 do
     #lcov -z --directory "$VOLDIR"
     timeout -k 60 60 $DIR/run-command.bash "$PKG" $testcase "$CMD" >&2
-    lcov --capture --directory "$VOLDIR" | $DIR/parse-info.py | sort -u > /tmp/new
+    $DIR/lcov/bin/lcov --ignore-errors source --capture --directory "$VOLDIR" | $DIR/parse-info.py | sort -u > /tmp/new
     timestamp=$(find "$testcase" -printf '%T@\n')
     while read -r l
     do
@@ -71,5 +71,5 @@ done
 
 rm /tmp/cov
 
-lcov --directory "$VOLDIR" --capture > /tmp/cov
+$DIR/lcov/bin/lcov --directory "$VOLDIR" --capture > /tmp/cov
 $DIR/lcov/bin/genhtml -o "$VOLDIR/lcov" /tmp/cov
