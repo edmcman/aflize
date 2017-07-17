@@ -11,7 +11,7 @@ EXTRAPKGS="$@"
 # Pull -image if possible
 if docker pull eschwartz/covize:$PKG
 then
-    docker tag -f eschwartz/covize:$PKG $PKG-image
+    docker tag eschwartz/covize:$PKG $PKG-image
 else
     # If not, build it
     "$DIR/build-image.bash" $PKG $EXTRAPKGS
@@ -24,6 +24,4 @@ then
     id=$(docker create $PKG-image)
     docker cp $id:/root/pkg/ "$VOLDIR"
     docker rm -v $id
-    mv "$VOLDIR/pkg"/* "$VOLDIR"
-    rmdir "$VOLDIR/pkg"
 fi
