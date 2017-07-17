@@ -72,4 +72,4 @@ done
 rm /tmp/cov
 
 $DIR/lcov/bin/lcov --directory "$VOLDIR" --capture > /tmp/cov
-$DIR/lcov/bin/genhtml -o "$VOLDIR/lcov" /tmp/cov
+$DIR/lcov/bin/genhtml --ignore-errors source -o "$VOLDIR/lcov" /tmp/cov
