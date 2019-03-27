@@ -3,11 +3,17 @@
 case "$(basename "$0")" in
 "cc" | "gcc")
     PROG="${ORIG_CC?"No original"}"
-    EXTRA="--coverage -lgcov"
+    EXTRA="${EXTRA_FLAGS:--fsanitize=cfi -fvisibility=hidden -fuse-ld=gold -flto g}"
     ;;
 "c++" | "g++")
     PROG="${ORIG_CXX?"No original"}"
-    EXTRA="--coverage -lgcov"
+    EXTRA="${EXTRA_FLAGS:---coverage -lgcov}"
+    ;;
+"ranlib")
+    PROG="/bin/true"
+    ;;
+"ar")
+    PROG="/usr/bin/llvm-ar"
     ;;
 *)
     exit 1

@@ -3,8 +3,7 @@
 echo "export ORIG_CC=`readlink $( readlink /etc/alternatives/cc) `" >> /etc/bash.bashrc
 echo "export ORIG_CXX=`readlink $( readlink /etc/alternatives/c++) `" >> /etc/bash.bashrc
 
-rm /usr/bin/cc && cp /usr/bin/gcc-cov /usr/bin/cc
-rm /usr/bin/gcc && cp /usr/bin/gcc-cov /usr/bin/gcc
-rm /usr/bin/g++ && cp /usr/bin/gcc-cov /usr/bin/g++
-rm /usr/bin/i686-linux-gnu-gcc && cp /usr/bin/gcc-cov /usr/bin/i686-linux-gnu-gcc
-rm /usr/bin/i686-linux-gnu-g++ && cp /usr/bin/gcc-cov /usr/bin/i686-linux-gnu-g++
+for f in /usr/bin/{cc,gcc,g++,i686-linux-gnu-gcc,i686-linux-gnu-g++}
+do
+    rm $f && cp /usr/bin/gcc-cov $f
+done
